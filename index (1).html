@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090817" />
+  <title>NASHA — Community Team</title>
+  <style>
+    :root{--bg:#090817;--panel:#12112a;--panel2:#191735;--line:#302b58;--text:#f5f3ff;--muted:#aaa5c8;--purple:#8b5cf6;--blue:#4f8cff;--danger:#ff5f79}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 15% 0%,#30205e 0,transparent 38%),radial-gradient(ellipse at 90% 20%,#142c60 0,transparent 34%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+    button,input,select{font:inherit} button{cursor:pointer}
+    .wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+    header{padding:24px 0;border-bottom:1px solid #ffffff12;backdrop-filter:blur(14px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{font-weight:950;letter-spacing:4px;font-size:23px;background:linear-gradient(90deg,#c4a7ff,#78aaff);color:transparent;background-clip:text}
+    .nav-actions{display:flex;gap:10px;align-items:center}
+    .btn{border:1px solid var(--line);border-radius:12px;padding:10px 15px;color:var(--text);background:#ffffff0a;font-weight:700;transition:.2s}
+    .btn:hover{transform:translateY(-2px);border-color:#8b5cf6}
+    .primary{background:linear-gradient(100deg,var(--purple),var(--blue));border:0;box-shadow:0 8px 28px #6248d944}
+    .hero{text-align:center;padding:76px 0 45px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #8b5cf655;border-radius:99px;color:#cbbaff;background:#8b5cf614;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+    h1{font-size:clamp(42px,8vw,76px);line-height:1.02;letter-spacing:-3px;margin:22px 0 14px}
+    h1 span{background:linear-gradient(90deg,#b78cff,#65a8ff);background-clip:text;color:transparent}
+    .hero p{color:var(--muted);max-width:590px;margin:0 auto;font-size:16px;line-height:1.7}
+    .stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .stat{padding:12px 20px;border:1px solid #ffffff15;border-radius:14px;background:#ffffff08;color:var(--muted);font-size:13px}
+    .stat strong{color:white;font-size:18px;margin-right:6px}
+    .toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:24px 0}
+    .toolbar h2{font-size:22px;margin:0}.search{width:min(300px,100%);padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#100f22;color:white;outline:none}
+    .search:focus,input:focus,select:focus{border-color:var(--purple)}
+    .role-section{margin:34px 0 46px}.section-heading{display:flex;align-items:center;gap:10px;margin-bottom:17px}
+    .section-heading h3{margin:0;font-size:17px;letter-spacing:.3px}.section-heading .line{height:1px;background:linear-gradient(90deg,var(--line),transparent);flex:1}
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+    .member{position:relative;padding:20px;border:1px solid #ffffff16;border-radius:18px;background:linear-gradient(145deg,#191733dd,#101023ee);overflow:hidden;transition:.22s}
+    .member:hover{transform:translateY(-4px);border-color:#8b5cf688;box-shadow:0 14px 38px #0005}
+    .member:before{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:#7651e51a;filter:blur(15px);right:-55px;top:-60px}
+    .avatar{width:66px;height:66px;border-radius:19px;object-fit:cover;border:2px solid #9d7bff88;background:#242044}
+    .member-name{font-size:17px;font-weight:850;margin:14px 0 5px;overflow-wrap:anywhere}
+    .member-user{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+    .role-pill{display:inline-block;margin-top:13px;padding:6px 10px;border-radius:99px;background:#7651e522;color:#c9b6ff;border:1px solid #9b7bff44;font-size:11px;font-weight:800;letter-spacing:.5px}
+    .empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px}
+    footer{padding:35px 0 45px;text-align:center;color:#77728f;border-top:1px solid #ffffff12;font-size:13px}
+    .modal{position:fixed;inset:0;background:#05040dcc;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}
+    .modal.open{display:flex}.dialog{width:min(480px,100%);max-height:90vh;overflow:auto;background:#14132b;border:1px solid #51447f;border-radius:20px;padding:23px;box-shadow:0 25px 90px #0009}
+    .dialog h2{margin:0 0 18px}.field{display:grid;gap:7px;margin:13px 0}.field label{font-size:12px;color:#c2bdd8;font-weight:750}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:11px;background:#0d0c1e;color:white;outline:none}
+    .form-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:20px}.admin-list{display:grid;gap:9px;margin-top:15px}.admin-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border:1px solid #ffffff15;border-radius:12px}.admin-row small{display:block;color:var(--muted)}.tiny{padding:7px 10px;font-size:12px}.danger{color:#ff9bab;border-color:#ff5f7955}
+    .notice{font-size:12px;line-height:1.55;color:#aaa5c8;background:#ffffff08;padding:11px;border-radius:10px;margin-top:12px}
+
+    .rules-section{margin:30px 0 52px}
+    .rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:13px}
+    .rule-card{padding:17px;border:1px solid #ffffff16;border-radius:15px;background:linear-gradient(145deg,#191733dd,#101023ee)}
+    .rule-card strong{display:block;margin-bottom:7px;color:#d8c8ff;font-size:14px}
+    .rule-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+    .rules-intro{color:var(--muted);line-height:1.7;margin:-5px 0 17px}
+    @media(max-width:600px){.hero{padding:55px 0 30px}.toolbar{align-items:stretch;flex-direction:column}.search{width:100%}.nav .btn{padding:9px 11px}.brand{font-size:20px}}
+  </style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <div class="brand">NASHA</div>
+  <div class="nav-actions"><button class="btn" id="discordBtn">Join Discord ↗</button><button class="btn primary" id="adminBtn">Admin Panel</button></div>
+</div></header>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">✦ Official Community Team</div>
+    <h1>Meet the <span>NASHA</span><br>Team</h1>
+    <p>The people behind our community. Get to know the team members who help keep NASHA welcoming, active, and organized.</p>
+    <div class="stats"><div class="stat"><strong id="memberCount">0</strong> Team Members</div><div class="stat"><strong id="roleCount">0</strong> Roles</div></div>
+  </section>
+  <div class="toolbar"><h2>Our Team</h2><input class="search" id="search" placeholder="Search name or role..." /></div>
+  <div id="team"></div>
+
+  <section class="rules-section" id="rules">
+    <div class="section-heading"><h3>NASHA Community Rules</h3><div class="line"></div></div>
+    <p class="rules-intro">Keep NASHA friendly, safe, and enjoyable for everyone. By joining, you agree to follow these rules.</p>
+    <div class="rules-grid">
+      <article class="rule-card"><strong>01 · Respect Everyone</strong><p>Treat every member with respect. Bullying, harassment, hate speech, and personal attacks are not allowed.</p></article>
+      <article class="rule-card"><strong>02 · No Toxicity or Drama</strong><p>Avoid unnecessary arguments, provoking others, threats, and drama. Keep conversations mature and friendly.</p></article>
+      <article class="rule-card"><strong>03 · No Spam or Flooding</strong><p>Do not spam messages, repeat content, abuse mentions, or flood text and voice channels.</p></article>
+      <article class="rule-card"><strong>04 · Keep Content Appropriate</strong><p>Do not share explicit, illegal, disturbing, or otherwise inappropriate content. Follow Discord's Terms of Service.</p></article>
+      <article class="rule-card"><strong>05 · No Advertising Without Permission</strong><p>Do not advertise servers, social accounts, products, or services without staff approval.</p></article>
+      <article class="rule-card"><strong>06 · Protect Privacy</strong><p>Never share anyone's private information, messages, photos, or personal details without permission.</p></article>
+      <article class="rule-card"><strong>07 · Use Channels Correctly</strong><p>Post in the right channels and follow each channel's topic and pinned instructions.</p></article>
+      <article class="rule-card"><strong>08 · Voice Chat Etiquette</strong><p>Do not deafen others with loud audio, mic spam, soundboards, or disruptive behavior.</p></article>
+      <article class="rule-card"><strong>09 · No Impersonation or Scams</strong><p>Do not impersonate members or staff, scam users, distribute malicious links, or attempt phishing.</p></article>
+      <article class="rule-card"><strong>10 · Listen to Staff</strong><p>Follow reasonable moderator instructions. If you disagree with a decision, discuss it calmly in private with staff.</p></article>
+      <article class="rule-card"><strong>11 · No Rule Evasion</strong><p>Do not use alternate accounts or other methods to evade mutes, bans, or moderation actions.</p></article>
+      <article class="rule-card"><strong>12 · Follow Discord Guidelines</strong><p>All members must follow Discord's Terms of Service and Community Guidelines.</p></article>
+    </div>
+    <p class="notice">Staff may warn, mute, kick, or ban members depending on the severity or repetition of a violation. These rules may be updated when needed.</p>
+  </section>
+</main>
+<footer><div class="wrap">© <span id="year"></span> NASHA Community. Made with care.</div></footer>
+
+<div class="modal" id="loginModal"><div class="dialog">
+  <h2>Admin Login</h2>
+  <div class="field"><label>Admin password</label><input id="password" type="password" placeholder="Enter password" /></div>
+  <div class="form-actions"><button class="btn" data-close="loginModal">Cancel</button><button class="btn primary" id="loginBtn">Login</button></div>
+  <p class="notice">Demo-only protection: the password check runs in your browser. Do not use this for private or sensitive information. See README for the secure shared-admin upgrade.</p>
+</div></div>
+
+<div class="modal" id="adminModal"><div class="dialog">
+  <h2>Manage Team</h2>
+  <div class="notice">Changes are saved in this browser only. Add a member with the form below.</div>
+  <form id="memberForm">
+    <input type="hidden" id="editId">
+    <div class="field"><label>Full name *</label><input id="name" required maxlength="50" placeholder="e.g. Alex" /></div>
+    <div class="field"><label>Username / Discord ID</label><input id="username" maxlength="60" placeholder="@username" /></div>
+    <div class="field"><label>Role *</label><select id="role" required></select></div>
+    <div class="field"><label>Avatar image URL</label><input id="avatar" type="url" placeholder="https://example.com/avatar.png" /></div>
+    <div class="form-actions"><button class="btn" type="reset" id="resetForm">Clear</button><button class="btn primary" type="submit">Save Member</button></div>
+  </form>
+  <div class="section-heading" style="margin-top:25px"><h3>Current Members</h3><div class="line"></div></div>
+  <div class="admin-list" id="adminList"></div>
+  <div class="form-actions"><button class="btn" id="exportBtn">Export JSON</button><button class="btn" id="importBtn">Import JSON</button><input type="file" id="importFile" accept="application/json" hidden><button class="btn" data-close="adminModal">Done</button></div>
+</div></div>
+<script>
+  // Change these two values before publishing.
+  const ADMIN_PASSWORD = "nasha123";
+  const DISCORD_INVITE = "https://discord.gg/your-invite";
+
+  const ROLES = ["Owner","Co-Owner","Head Admin","Admin","Head Moderator","Moderator","Staff Manager","Staff","Member"];
+  const starterMembers = [
+    {id:"1",name:"Your Name",username:"@owner",role:"Owner",avatar:""},
+    {id:"2",name:"Add Co-Owner",username:"@username",role:"Co-Owner",avatar:""},
+    {id:"3",name:"Add Admin",username:"@username",role:"Admin",avatar:""},
+    {id:"4",name:"Add Moderator",username:"@username",role:"Moderator",avatar:""},
+    {id:"5",name:"Add Staff",username:"@username",role:"Staff",avatar:""}
+  ];
+  const KEY = "nasha-team-members-v1";
+  let members = JSON.parse(localStorage.getItem(KEY) || "null") || starterMembers;
+  const $ = id => document.getElementById(id);
+  const save = () => localStorage.setItem(KEY, JSON.stringify(members));
+  const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const initials = name => (name || "?").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
+  const avatarFor = m => m.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=292052&color=ffffff&bold=true&size=128`;
+  $("year").textContent = new Date().getFullYear();
+  $("discordBtn").onclick = () => window.open(DISCORD_INVITE, "_blank", "noopener");
+  $("role").innerHTML = ROLES.map(r=>`<option>${r}</option>`).join("");
+
+  function render(){
+    const q = $("search").value.trim().toLowerCase();
+    const filtered = members.filter(m => `${m.name} ${m.username} ${m.role}`.toLowerCase().includes(q));
+    $("memberCount").textContent = members.length;
+    $("roleCount").textContent = new Set(members.map(m=>m.role)).size;
+    $("team").innerHTML = ROLES.map(role=>{
+      const group = filtered.filter(m=>m.role===role);
+      if(!group.length) return "";
+      return `<section class="role-section"><div class="section-heading"><h3>${esc(role)}</h3><div class="line"></div></div><div class="cards">${group.map(m=>`
+        <article class="member"><img class="avatar" src="${esc(avatarFor(m))}" alt="${esc(m.name)} avatar" onerror="this.src='https://ui-avatars.com/api/?name=User&background=292052&color=fff'">
+          <div class="member-name">${esc(m.name)}</div><div class="member-user">${esc(m.username || "NASHA team")}</div><span class="role-pill">${esc(m.role)}</span>
+        </article>`).join("")}</div></section>`;
+    }).join("") || `<div class="empty">No team members found. Try another search.</div>`;
+    $("adminList").innerHTML = members.map(m=>`<div class="admin-row"><div><b>${esc(m.name)}</b><small>${esc(m.role)} · ${esc(m.username)}</small></div><div style="display:flex;gap:6px"><button class="btn tiny" onclick="editMember('${m.id}')">Edit</button><button class="btn tiny danger" onclick="deleteMember('${m.id}')">Delete</button></div></div>`).join("") || `<div class="empty">No members yet.</div>`;
+  }
+  $("search").addEventListener("input",render);
+  $("adminBtn").onclick=()=>{$("loginModal").classList.add("open");$("password").focus()};
+  $("loginBtn").onclick=()=>{
+    if($("password").value===ADMIN_PASSWORD){$("loginModal").classList.remove("open");$("password").value="";$("adminModal").classList.add("open");render();}
+    else alert("Incorrect password. Update ADMIN_PASSWORD in index.html if this is your first setup.");
+  };
+  document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>$(b.dataset.close).classList.remove("open"));
+  $("memberForm").onsubmit=e=>{
+    e.preventDefault();
+    const id=$("editId").value || String(Date.now());
+    const item={id,name:$("name").value.trim(),username:$("username").value.trim(),role:$("role").value,avatar:$("avatar").value.trim()};
+    const index=members.findIndex(m=>m.id===id);
+    if(index>=0) members[index]=item; else members.push(item);
+    save(); $("memberForm").reset(); $("editId").value=""; render();
+  };
+  window.editMember=id=>{
+    const m=members.find(x=>x.id===id); if(!m)return;
+    $("editId").value=m.id;$("name").value=m.name;$("username").value=m.username||"";$("role").value=m.role;$("avatar").value=m.avatar||"";
+    $("name").focus();
+  };
+  window.deleteMember=id=>{
+    const m=members.find(x=>x.id===id);if(!m)return;
+    if(confirm(`Delete ${m.name} from the team?`)){members=members.filter(x=>x.id!==id);save();render();}
+  };
+  $("resetForm").onclick=()=>setTimeout(()=>$("editId").value="",0);
+  $("exportBtn").onclick=()=>{
+    const blob=new Blob([JSON.stringify(members,null,2)],{type:"application/json"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="nasha-team.json";a.click();URL.revokeObjectURL(a.href);
+  };
+  $("importBtn").onclick=()=>$("importFile").click();
+  $("importFile").onchange=async e=>{
+    const file=e.target.files[0];if(!file)return;
+    try{const data=JSON.parse(await file.text());if(!Array.isArray(data)||!data.every(x=>x.name&&ROLES.includes(x.role)))throw Error();
+      members=data.map((m,i)=>({id:String(m.id||Date.now()+i),name:String(m.name),username:String(m.username||""),role:m.role,avatar:String(m.avatar||"")}));
+      save();render();alert("Team imported successfully.");
+    }catch{alert("Invalid JSON file. Please import a NASHA team JSON export.");}
+    e.target.value="";
+  };
+  render();
+</script>
+</body>
+</html>
